@@ -27,7 +27,7 @@
 
 -module(riak_core_stat_q).
 
--compile(export_all).
+-compile([nowarn_export_all,export_all]).
 
 -export_type([path/0,
               stat_name/0]).

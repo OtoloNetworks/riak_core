@@ -19,6 +19,7 @@
 -module(riak_core_vnode_worker).
 
 -behaviour(gen_server).
+-compile(nowarn_deprecated_function).
 
 -include("riak_core_vnode.hrl").
 

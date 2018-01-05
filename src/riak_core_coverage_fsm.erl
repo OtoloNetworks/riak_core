@@ -65,6 +65,7 @@
 -include("riak_core_vnode.hrl").
 
 -behaviour(gen_fsm).
+-compile(nowarn_deprecated_function).
 
 %% API
 -export([start_link/3]).

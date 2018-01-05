@@ -186,10 +186,10 @@ stats() ->
 
 system_stats() ->
     [
-     {cpu_stats, cpu, [{sample_interval, 5000}], [{nprocs, cpu_nprocs},
-                                                  {avg1  , cpu_avg1},
-                                                  {avg5  , cpu_avg5},
-                                                  {avg15 , cpu_avg15}]},
+%%     {cpu_stats, cpu, [{sample_interval, 5000}], [{nprocs, cpu_nprocs},
+ %%                                                 {avg1  , cpu_avg1},
+  %%                                                {avg5  , cpu_avg5},
+   %%                                               {avg15 , cpu_avg15}]},
      {mem_stats, {function, memsup, get_memory_data, [], match, {total, allocated, '_'}},
       [], [{total, mem_total},
            {allocated, mem_allocated}]},
