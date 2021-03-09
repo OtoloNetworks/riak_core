@@ -22,6 +22,7 @@
 
 -module(riak_core_handoff_sender).
 -export([start_link/4, get_handoff_ssl_options/0]).
+-compile(nowarn_deprecated_function).
 -include("riak_core_vnode.hrl").
 -include("riak_core_handoff.hrl").
 -define(ACK_COUNT, 1000).

@@ -59,6 +59,7 @@
 -compile({pulse_replace_module, [{gen_fsm, pulse_gen_fsm},
                                  {gen_server, pulse_gen_server}]}).
 -endif.
+-compile(nowarn_deprecated_function).
 
 -define(normal_reason(R),
         (R == normal orelse R == shutdown orelse
@@ -243,7 +244,7 @@ do_init(State = #state{index=Index, mod=Mod, forward=Forward}) ->
             end,
             riak_core_handoff_manager:remove_exclusion(Mod, Index),
             Timeout = app_helper:get_env(riak_core, vnode_inactivity_timeout, ?DEFAULT_TIMEOUT),
-            Timeout2 = Timeout + random:uniform(Timeout),
+            Timeout2 = Timeout + rand:uniform(Timeout),
             State2 = State#state{modstate=ModState, inactivity_timeout=Timeout2,
                                  pool_pid=PoolPid, pool_config=PoolConfig},
             lager:debug("vnode :: ~p/~p :: ~p~n", [Mod, Index, Forward]),

@@ -25,6 +25,7 @@
 -module(riak_core_vnode_master).
 -include("riak_core_vnode.hrl").
 -behaviour(gen_server).
+-compile(nowarn_deprecated_function).
 -export([start_link/1, start_link/2, start_link/3, get_vnode_pid/2,
          start_vnode/2,
          command/3, command/4,

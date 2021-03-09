@@ -21,6 +21,8 @@
          unregister_vnode/3, command_return_vnode/2, overloaded/1]).
 -export([system_continue/3, system_terminate/4, system_code_change/4]).
 
+-compile(nowarn_deprecated_function).
+
 -include("riak_core_vnode.hrl").
 
 -ifdef(TEST).
