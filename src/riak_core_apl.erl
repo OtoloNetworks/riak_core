@@ -25,6 +25,7 @@
 -module(riak_core_apl).
 -export([active_owners/1, active_owners/2,
          get_apl/3, get_apl/4,
+         get_apl_chbin/4,
          get_apl_ann/2, get_apl_ann/3, get_apl_ann/4,
          get_apl_ann_with_pnum/1,
          get_primary_apl/3, get_primary_apl/4,
