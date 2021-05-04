@@ -528,7 +528,7 @@ active(trigger_delete, State=#state{mod=Mod,modstate=ModState,index=Idx}) ->
     case mark_delete_complete(Idx, Mod) of
         {ok, _NewRing} ->
             {ok, NewModState} = Mod:delete(ModState),
-            lager:debug("~p ~p vnode deleted", [Idx, Mod]);
+            lager:debug("~40.16.0B ~p vnode deleted", [Idx, Mod]);
         _ -> NewModState = ModState
     end,
     maybe_shutdown_pool(State),
@@ -538,7 +538,7 @@ active(unregistered, State=#state{mod=Mod, index=Index}) ->
     %% Add exclusion so the ring handler will not try to spin this vnode
     %% up until it receives traffic.
     riak_core_handoff_manager:add_exclusion(Mod, Index),
-    lager:debug("~p ~p vnode excluded and unregistered.",
+    lager:debug("~40.16.0B ~p vnode excluded and unregistered.",
                 [Index, Mod]),
     {stop, normal, State#state{handoff_target=none,
                                handoff_type=undefined,
@@ -657,10 +657,10 @@ finish_handoff(SeenIdxs, State=#state{mod=Mod,
             %% running on non-existant data.
             maybe_shutdown_pool(State),
             {ok, NewModState} = Mod:delete(ModState),
-            lager:debug("~p ~p vnode finished handoff and deleted.",
+            lager:debug("~40.16.0B ~p vnode finished handoff and deleted.",
                         [Idx, Mod]),
             riak_core_vnode_manager:unregister_vnode(Idx, Mod),
-            lager:debug("vnode hn/fwd :: ~p/~p :: ~p -> ~p~n",
+            lager:debug("vnode hn/fwd :: ~p/~40.16.0B :: ~p -> ~p~n",
                         [State#state.mod, State#state.index, State#state.forward, HN]),
             State2 = mod_set_forwarding(HN, State),
             continue(State2#state{modstate={deleted,NewModState}, % like to fail if used
