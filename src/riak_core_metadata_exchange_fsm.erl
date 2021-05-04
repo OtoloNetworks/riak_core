@@ -161,7 +161,8 @@ exchange(timeout, State=#state{peer=Peer}) ->
             lager:info("completed metadata exchange with ~p. repaired ~p missing local prefixes, "
                        "~p missing remote prefixes, and ~p keys", [Peer, LocalPrefixes, RemotePrefixes, Keys]);
         false ->
-            lager:debug("completed metadata exchange with ~p. nothing repaired", [Peer])
+            % lager:debug("completed metadata exchange with ~p. nothing repaired", [Peer])
+            ok
     end,
     {stop, normal, State}.
 
