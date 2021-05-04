@@ -1505,11 +1505,11 @@ log(debug, {Msg, Args}) ->
     lager:debug(Msg, Args);
 log(ownership, {Idx, NewOwner, CState}) ->
     Owner = riak_core_ring:index_owner(CState, Idx),
-    lager:debug("(new-owner) ~b :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
+    lager:debug("(new-owner) ~40.16.0B :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
 log(reassign, {Idx, NewOwner, CState}) ->
     Owner = riak_core_ring:index_owner(CState, Idx),
-    lager:debug("(reassign) ~b :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
+    lager:debug("(reassign) ~40.16.0B :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
 log(next, {Idx, Owner, NewOwner}) ->
-    lager:debug("(pending) ~b :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
+    lager:debug("(pending) ~40.16.0B :: ~p -> ~p~n", [Idx, Owner, NewOwner]);
 log(_, _) ->
     ok.

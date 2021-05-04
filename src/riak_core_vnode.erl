@@ -247,7 +247,7 @@ do_init(State = #state{index=Index, mod=Mod, forward=Forward}) ->
             Timeout2 = Timeout + rand:uniform(Timeout),
             State2 = State#state{modstate=ModState, inactivity_timeout=Timeout2,
                                  pool_pid=PoolPid, pool_config=PoolConfig},
-            lager:debug("vnode :: ~p/~p :: ~p~n", [Mod, Index, Forward]),
+            lager:debug("vnode :: ~p/~40.16.0B :: ~p~n", [Mod, Index, Forward]),
             State3 = mod_set_forwarding(Forward, State2),
             {ok, State3}
     end.
@@ -378,7 +378,7 @@ vnode_coverage(Sender, Request, KeySpaces, State=#state{index=Index,
         Forwards when is_list(Forwards) ->
             Action = Mod:handle_coverage(Request, KeySpaces, Sender, ModState);
         NextOwner ->
-            lager:debug("Forwarding coverage ~p -> ~p: ~p~n", [node(), NextOwner, Index]),
+            lager:debug("Forwarding coverage ~p -> ~p: ~40.16.0B~n", [node(), NextOwner, Index]),
             riak_core_vnode_master:coverage(Request, {Index, NextOwner},
                                             KeySpaces, Sender,
                                             riak_core_vnode_master:reg_name(Mod)),
@@ -444,7 +444,7 @@ forward_request(_, Request, HOTarget, _ResizeTarget, Sender, State) ->
     vnode_forward(explicit, HOTarget, Sender, Request, State).
 
 vnode_forward(Type, ForwardTo, Sender, Request, State) ->
-    lager:debug("Forwarding (~p) {~p,~p} -> ~p~n",
+    lager:debug("Forwarding (~p) {~40.16.0B,~p} -> ~p~n",
                 [Type, State#state.index, node(), ForwardTo]),
     riak_core_vnode_master:command_unreliable(ForwardTo, Request, Sender,
                                               riak_core_vnode_master:reg_name(State#state.mod)).
@@ -710,7 +710,7 @@ handle_event({set_forwarding, undefined}, _StateName,
     %% ignore requests to stop forwarding.
     continue(State);
 handle_event({set_forwarding, ForwardTo}, _StateName, State) ->
-    lager:debug("vnode fwd :: ~p/~p :: ~p -> ~p~n",
+    lager:debug("vnode fwd :: ~p/~40.16.0B :: ~p -> ~p~n",
                 [State#state.mod, State#state.index, State#state.forward, ForwardTo]),
     State2 = mod_set_forwarding(ForwardTo, State),
     continue(State2#state{forward=ForwardTo});
@@ -833,7 +833,7 @@ handle_info({'EXIT', Pid, Reason},
             lager:error("~p ~p worker pool crashed ~p\n", [Index, Mod, Reason]),
             {pool, WorkerModule, PoolSize, WorkerArgs}=PoolConfig,
             lager:debug("starting worker pool ~p with size "
-                        "of ~p for vnode ~p.",
+                        "of ~p for vnode ~40.16.0B.",
                         [WorkerModule, PoolSize, Index]),
             {ok, NewPoolPid} =
                 riak_core_vnode_worker_pool:start_link(WorkerModule,

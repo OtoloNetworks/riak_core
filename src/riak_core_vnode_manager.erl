@@ -603,13 +603,13 @@ get_vnode(IdxList, Mod, State) ->
     StartFun =
         fun(Idx) ->
                 ForwardTo = get_forward(Mod, Idx, State),
-                lager:debug("Will start VNode for partition ~p", [Idx]),
+                lager:debug("Will start VNode for partition ~40.16.0B", [Idx]),
                 {ok, Pid} =
                     riak_core_vnode_sup:start_vnode(Mod, Idx, ForwardTo),
                 register_vnode_stats(Mod, Idx, Pid),
-                lager:debug("Started VNode, waiting for initialization to complete ~p, ~p ", [Pid, Idx]),
+                lager:debug("Started VNode, waiting for initialization to complete ~p, ~40.16.0B ", [Pid, Idx]),
                 ok = riak_core_vnode:wait_for_init(Pid),
-                lager:debug("VNode initialization ready ~p, ~p", [Pid, Idx]),
+                lager:debug("VNode initialization ready ~p, ~40.16.0B", [Pid, Idx]),
                 {Idx, Pid}
         end,
     MaxStart = app_helper:get_env(riak_core, vnode_parallel_start,
