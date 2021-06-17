@@ -58,11 +58,11 @@ bang_unreliable(Dest, Msg) ->
     ok -> Msg;
 
     noconnect ->
-      lager:error("bang_unreliable: fail with noconnect"),
+      lager:warning("bang_unreliable: fail with noconnect"),
       Msg;
 
     nosuspend ->
-      lager:warning("bang_unreliable: retry with suspend"),
+      lager:debug("bang_unreliable: retry with suspend"),
       erlang:send(Dest, Msg),
       Msg
   end.
