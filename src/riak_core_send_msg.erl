@@ -53,5 +53,11 @@ send_event_unreliable(Name, Event) ->
     ok.
 
 bang_unreliable(Dest, Msg) ->
-    catch erlang:send(Dest, Msg, [noconnect, nosuspend]),
-    Msg.
+  case erlang:send(Dest, Msg, [noconnect, nosuspend]) of
+    ok -> Msg;
+
+    false ->
+      lager:warning("bang_unreliable: retry with suspend"),
+      erlang:send(Dest, Msg),
+      Msg
+  end.
