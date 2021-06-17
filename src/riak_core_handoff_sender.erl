@@ -323,7 +323,7 @@ visit_item(K, V, Acc0 = #ho_acc{acksync_threshold = AccSyncThreshold}) ->
 visit_item2(_K, _V, Acc=#ho_acc{error={error, _Reason}}) ->
     %% When a TCP/SSL error occurs, #ho_acc.error is set to {error, Reason}.
     throw(Acc);
-visit_item2(K, V, Acc = #ho_acc{ack = _AccSyncThreshold, acksync_threshold = _AccSyncThreshold}) ->
+visit_item2(K, V, Acc = #ho_acc{ack = _Acc, acksync_threshold = _AccSyncThreshold}) ->
     #ho_acc{module=Module,
             socket=Sock,
             src_target={SrcPartition, TargetPartition},
