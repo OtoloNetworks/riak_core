@@ -1165,8 +1165,6 @@ compare(Level, Bucket, Tree, Remote, AccFun, KeyAcc) ->
     Inter = ordsets:intersection(ordsets:from_list(HL1),
                                  ordsets:from_list(HL2)),
     Diff = ordsets:subtract(Union, Inter),
-    lager:debug("Tree ~p level ~p bucket ~p\nL=~p\nR=~p\nD=~p\n",
-        [Tree, Level, Bucket, HL1, HL2, Diff]),
     KeyAcc3 =
         lists:foldl(fun({Bucket2, _}, KeyAcc2) ->
                             compare(Level+1, Bucket2, Tree, Remote, AccFun, KeyAcc2)
@@ -1180,8 +1178,6 @@ compare_segments(Segment, Tree=#state{id=Id}, Remote) ->
     HL1 = orddict:from_list(KeyHashes1),
     HL2 = orddict:from_list(KeyHashes2),
     Delta = riak_core_util:orddict_delta(HL1, HL2),
-    lager:debug("Tree ~p segment ~p diff ~p\n",
-                [Tree, Segment, Delta]),
     Keys = [begin
                 {Id, Segment, Key} = decode(KBin),
                 Type = key_diff_type(Diff),
